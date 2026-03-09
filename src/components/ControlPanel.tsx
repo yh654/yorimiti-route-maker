@@ -77,9 +77,10 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
     return (
         <div
             className={`
-                absolute transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) z-[1000] flex flex-col gap-2 
-                bottom-0 left-0 w-full sm:bottom-auto sm:top-6 sm:left-6 sm:w-96 sm:max-h-[calc(100vh-48px)]
-                ${isCollapsed ? 'translate-y-[calc(100%-60px)] cursor-pointer' : 'translate-y-0'}
+                fixed transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) z-[1000] flex flex-col gap-2 
+                bottom-4 left-0 w-full px-4 
+                sm:absolute sm:bottom-auto sm:top-6 sm:left-6 sm:w-96 sm:px-0 sm:bottom-0 sm:mb-0 sm:max-h-[calc(100vh-48px)]
+                ${isCollapsed ? 'translate-y-[calc(100%-52px)] cursor-pointer' : 'translate-y-0'}
             `}
             onClick={() => isCollapsed && setIsCollapsed(false)}
         >
