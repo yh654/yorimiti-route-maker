@@ -48,8 +48,14 @@ const MapAutoFit = ({
         if (!map || !enabled || points.length === 0 || typeof google === 'undefined') return;
         const bounds = new google.maps.LatLngBounds();
         points.forEach((p) => bounds.extend(p));
-        // コントロールパネル分の余白を左側に確保（420px）
-        map.fitBounds(bounds, { top: 80, right: 80, bottom: 80, left: 440 });
+
+        // 画面幅に応じて余白を計算
+        const isMobile = window.innerWidth < 640;
+        const padding = isMobile
+            ? { top: 60, right: 40, bottom: 280, left: 40 } // スマホ: 下のパネル分を空ける
+            : { top: 80, right: 80, bottom: 80, left: 440 }; // デスクトップ: 左のパネル分を空ける
+
+        map.fitBounds(bounds, padding);
     }, [map, enabled, points]);
     return null;
 };
