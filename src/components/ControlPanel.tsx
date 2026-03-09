@@ -59,8 +59,6 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
     const [category, setCategory] = useState<SpotCategory>('cafe');
     const [travelMode, setTravelMode] = useState<TravelMode>('DRIVE');
     const [hasSearched, setHasSearched] = useState(false);
-    const [originInput, setOriginInput] = useState(originName);
-    const [destInput, setDestInput] = useState(destinationName);
     const [isCollapsed, setIsCollapsed] = useState(false);
 
     const handleSearch = () => {
@@ -93,7 +91,6 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             <div className={`
                 glass-panel p-4 sm:p-5 overflow-y-auto sm:max-h-none
                 rounded-none sm:rounded-[24px] 
-                ${isCollapsed ? 'opacity-50 pointer-events-none sm:opacity-100 sm:pointer-events-auto' : 'opacity-100'}
             `}>
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-lg sm:text-xl font-bold flex items-center gap-2 text-gray-800" style={{ fontFamily: 'var(--font-outfit)' }}>
@@ -101,7 +98,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
                         よりみちルート
                     </h2>
                     <button
-                        onClick={() => setIsCollapsed(!isCollapsed)}
+                        onClick={(e) => { e.stopPropagation(); setIsCollapsed(!isCollapsed); }}
                         className="sm:hidden p-1 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-500 transition-colors"
                     >
                         {isCollapsed ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
@@ -115,15 +112,15 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
                             <MapPin size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-500 pointer-events-none" />
                             <input
                                 type="text"
-                                value={originInput || originName}
-                                onChange={(e) => { setOriginInput(e.target.value); onOriginChange(e.target.value); }}
+                                value={originName}
+                                onChange={(e) => onOriginChange(e.target.value)}
                                 placeholder="出発地を入力..."
                                 className="input-field pl-9 pr-10 py-2 sm:py-2.5 text-sm"
                             />
                             <button
-                                onClick={onGpsRequest}
+                                onClick={(e) => { e.stopPropagation(); onGpsRequest(); }}
                                 disabled={isGpsLoading}
-                                className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-blue-500 hover:bg-blue-50 rounded-lg transition-colors"
+                                className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-blue-500 hover:bg-blue-50 rounded-lg transition-colors z-20"
                             >
                                 {isGpsLoading ? <div className="animate-spin h-4 w-4 border-2 border-blue-400 border-t-transparent rounded-full" /> : <Locate size={18} />}
                             </button>
@@ -132,8 +129,8 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
                             <Navigation size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-red-400 pointer-events-none" />
                             <input
                                 type="text"
-                                value={destInput || destinationName}
-                                onChange={(e) => { setDestInput(e.target.value); onDestinationChange(e.target.value); }}
+                                value={destinationName}
+                                onChange={(e) => onDestinationChange(e.target.value)}
                                 placeholder="目的地を入力..."
                                 className="input-field pl-9 py-2 sm:py-2.5 text-sm"
                             />
@@ -203,7 +200,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
                     {!hasSearched ? (
                         <button
                             onClick={handleSearch}
-                            disabled={isLoading || (!destInput && !destinationName)}
+                            disabled={isLoading || !destinationName}
                             className="w-full btn-primary py-3.5 flex items-center justify-center gap-2 group disabled:opacity-50"
                         >
                             {isLoading ? <div className="animate-spin h-5 w-5 border-3 border-white border-t-transparent rounded-full" /> : <Search size={20} />}
