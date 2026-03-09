@@ -219,8 +219,8 @@ export default function Home() {
             />
 
             <ControlPanel
-                originName={routeData.origin.name}
-                destinationName={routeData.destination.name}
+                originName={pendingOriginName}
+                destinationName={pendingDestName}
                 availableSpots={availableSpots}
                 selectedSpot={selectedSpot}
                 detourRoute={activeDetourRoute}
