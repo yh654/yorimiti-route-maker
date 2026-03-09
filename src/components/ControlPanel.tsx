@@ -75,22 +75,26 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
     };
 
     return (
-        <div className={`
-            absolute transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) z-[1000] flex flex-col gap-2 
-            bottom-0 left-0 w-full sm:bottom-auto sm:top-6 sm:left-6 sm:w-96 sm:max-h-[calc(100vh-48px)]
-            ${isCollapsed ? 'translate-y-[calc(100%-60px)] sm:translate-y-0 sm:opacity-100' : 'translate-y-0'}
-        `}>
+        <div
+            className={`
+                absolute transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) z-[1000] flex flex-col gap-2 
+                bottom-0 left-0 w-full sm:bottom-auto sm:top-6 sm:left-6 sm:w-96 sm:max-h-[calc(100vh-48px)]
+                ${isCollapsed ? 'translate-y-[calc(100%-60px)] cursor-pointer' : 'translate-y-0'}
+            `}
+            onClick={() => isCollapsed && setIsCollapsed(false)}
+        >
             {/* モバイル用開閉ハンドル */}
             <div
                 className="sm:hidden flex justify-center p-2 bg-white/95 backdrop-blur-md rounded-t-3xl border-t border-white/50 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] cursor-pointer active:bg-gray-50"
-                onClick={() => setIsCollapsed(!isCollapsed)}
+                onClick={(e) => { e.stopPropagation(); setIsCollapsed(!isCollapsed); }}
             >
                 <div className="w-12 h-1.5 bg-gray-300 rounded-full" />
             </div>
 
             <div className={`
                 glass-panel p-4 sm:p-5 overflow-y-auto sm:max-h-none
-                rounded-none sm:rounded-[24px] 
+                rounded-none sm:rounded-[24px]
+                ${isCollapsed ? 'pointer-events-none' : 'pointer-events-auto'}
             `}>
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-lg sm:text-xl font-bold flex items-center gap-2 text-gray-800" style={{ fontFamily: 'var(--font-outfit)' }}>
