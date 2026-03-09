@@ -55,6 +55,8 @@ body {
     border: 1px solid #e5e7eb;
     background: #f9fafb;
     font-size: 0.95rem;
+    color: #111827;
+    /* 濃い黒を指定 */
     outline: none;
     transition: all 0.2s ease;
 }
